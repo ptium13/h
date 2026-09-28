@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TronLink Nile Testnet</title>
+</head>
+
+<body style="font-family:Arial;text-align:center;padding:40px">
+
+  <h2>TronLink Nile Testnet</h2>
+
+  <p>Connect TronLink and request a switch to Nile Testnet.</p>
+
+  <button onclick="switchToNile()"
+    style="padding:15px 25px;font-size:18px">
+    Switch to Nile Testnet
+  </button>
+
+  <p id="status"></p>
+
+  <script>
+    async function switchToNile() {
+      const status = document.getElementById("status");
+
+      try {
+        if (!window.tron) {
+          status.textContent =
+            "TronLink is not detected. Open this page inside TronLink's browser.";
+          return;
+        }
+
+        await window.tron.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0xcd8690dc" }]
+        });
+
+        status.textContent = "Network switch completed.";
+      } catch (error) {
+        status.textContent =
+          "Switch unsuccessful: " + (error.message || error);
+      }
+    }
+  </script>
+
+</body>
+</html>
